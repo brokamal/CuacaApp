@@ -55,9 +55,9 @@ function App(){
   const currentHour = (() => {
     const hour = currentTime.getHours();
     if (hour >= 0 && hour < 6) return 0;
-    if (hour >= 6 && hour < 12) return 6;
-    if (hour >= 12 && hour < 18) return 12;
-    if (hour >= 18 && hour <= 23) return 18;
+    if (hour >= 6 && hour < 12) return 1;
+    if (hour >= 12 && hour < 18) return 2;
+    if (hour >= 18 && hour <= 23) return 3;
     return null;
   })();
 
@@ -66,6 +66,9 @@ function App(){
   let currentTemperature = null;
 
   const temperatureData = data.data ? data.data.params[5].times[currentHour].celcius: null
+
+  const weatherData = data.data ? data.data.params[6].times[currentHour].name: null
+
 /* 
   if(data.data && data.data.params && data.data.params.t){
     const temperatureData = data.data.params[5].t.find(time => parseInt(time.h) === currentHour);
@@ -105,6 +108,9 @@ function App(){
         </div>
         <div className="temp">
            <p>{temperatureData}</p>
+        </div>
+        <div className="weather">
+          <p>{weatherData}</p>
         </div>
       </div>
     </div>
