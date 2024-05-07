@@ -34,7 +34,11 @@ function App(){
        })
       setCity('')
       }
-      else {
+      else if(province == ''){
+        return (
+        <p>Enter province first</p>
+
+        );
         console.log('Enter Province beforehand!')
       }
     }
@@ -68,14 +72,6 @@ function App(){
   const temperatureData = data.data ? data.data.params[5].times[currentHour].celcius: null
 
   const weatherData = data.data ? data.data.params[6].times[currentHour].name: null
-
-/* 
-  if(data.data && data.data.params && data.data.params.t){
-    const temperatureData = data.data.params[5].t.find(time => parseInt(time.h) === currentHour);
-    if(temperatureData){
-      currentTemperature = temperatureData.celcius;
-    }
-  } */
 
   return(
     <div className="app">
