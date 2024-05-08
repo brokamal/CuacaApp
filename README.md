@@ -1,5 +1,6 @@
 # CuacaApp
-A weather application using API with data from BMKG.
+A weather web application using API with data from BMKG.
+REST API can be found here: https://github.com/renomureza/cuaca-gempa-rest-api
 
 Boostraped with `create react app`.
 
