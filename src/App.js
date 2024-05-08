@@ -1,60 +1,56 @@
-import './App.css';
-import axios from 'axios';
+
+// App.js
 
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './App.css';
 import TimeRightNow from './TimeRightNow.js';
 
-function App(){
-  const [data, setData] = useState({})
-  const [province, setProvince] = useState('')
-  const [city, setCity] = useState('') 
+function App() {
+  const [data, setData] = useState({});
+  const [province, setProvince] = useState('');
+  const [city, setCity] = useState('');
   const [currentTime, setCurrentTime] = useState(new Date());
 
-  const url = `https://cuaca-gempa-rest-api.vercel.app/weather/${province}/${city}`
+  const url = `https://cuaca-gempa-rest-api.vercel.app/weather/${province}/${city}`;
 
   const searchProvince = (event) => {
-    if (event.key === 'Enter'){
-
-    axios.get(url).then((response) =>{
-    setData(response.data)
-    console.log(response.data)
-    })
-    setProvince('') 
-
+    if (event.key === 'Enter') {
+      fetchData();
+      setProvince('');
     }
-  }
+  };
 
   const searchCity = (event) => {
-
-    if (event.key === 'Enter'){
-      if(province !== ''){
-        axios.get(url).then((response) =>{
-        setData(response.data)
-        console.log(response.data)
-       })
-      setCity('')
-      }
-      else if(province == ''){
-        return (
-        <p>Enter province first</p>
-
-        );
-        console.log('Enter Province beforehand!')
+    if (event.key === 'Enter') {
+      if (province !== '') {
+        fetchData();
+        setCity('');
+      } else {
+        console.log('Enter Province beforehand!');
       }
     }
-  }
+  };
+
+  const fetchData = () => {
+    axios.get(url)
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  };
 
   useEffect(() => {
     const timerID = setInterval(() => tick(), 1000);
-    
+
     return () => clearInterval(timerID);
-    
-    },
-  []);
-  
+  }, []);
+
   const tick = () => {
     setCurrentTime(new Date());
-  }
+  };
 
   const currentHour = (() => {
     const hour = currentTime.getHours();
@@ -65,60 +61,46 @@ function App(){
     return null;
   })();
 
+  const temperatureData = data.data ? data.data.params[5].times[currentHour].celcius : null;
+  const weatherData = data.data ? data.data.params[6].times[currentHour].name : null;
 
- 
-  let currentTemperature = null;
-
-  const temperatureData = data.data ? data.data.params[5].times[currentHour].celcius: null
-
-  const weatherData = data.data ? data.data.params[6].times[currentHour].name: null
-
-  return(
+  return (
     <div className="app">
-      <div className="tiempo">
+      <div className="header">
+        <h1>Weather Forecast</h1>
         <TimeRightNow />
       </div>
-      <div className="searchprovince">
+      <div className="search-container">
         <input
           value={province}
-          onChange={event => setProvince(event.target.value)}
+          onChange={(event) => setProvince(event.target.value)}
           onKeyPress={searchProvince}
           placeholder="Enter province"
-          type="text" />
-        </div> 
-      <div className="searchcity">
-        <input 
-            value={city}
-            onChange={event => setCity(event.target.value)}
-            onKeyPress={searchCity}
-            placeholder="Enter city"
-            type="text" /> 
-          </div> 
-      <div className="container">
-        <div className="top">
-          <div className="province">
-           {<p>{data.data ? data.data.domain: null}</p>}
+          type="text"
+        />
+        <input
+          value={city}
+          onChange={(event) => setCity(event.target.value)}
+          onKeyPress={searchCity}
+          placeholder="Enter city"
+          type="text"
+        />
+      </div>
+      <div className="weather-container">
+        {data.data &&
+          <div className="weather-card">
+            <p>Province: {data.data.domain}</p>
+            <p>City: {data.data.description}</p>
+            <p className="temp">{temperatureData}</p>
+            <p className="weather">{weatherData}</p>
           </div>
-          <div className="city">
-           {<p>{data.data ? data.data.description : null}</p>}
-        </div>
-        <div className="temp">
-           <p>{temperatureData}</p>
-        </div>
-        <div className="weather">
-          <p>{weatherData}</p>
-        </div>
+        }
+      </div>
+      <div className="footer">
+        <p>Data provided by BMKG</p>
       </div>
     </div>
-   </div>
-
-
-
   );
-
-
-
 }
 
- 
 export default App;
