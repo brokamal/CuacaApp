@@ -8,8 +8,8 @@ Boostraped with `create react app`.
 ## Work in progress.
 
 To add:
-Selection scroll for provinces and cities search.
-Logo and theme functionalities based on weather. 
+- Selection scroll for provinces and cities search.
+- Logo and theme functionalities based on weather. 
 
 # How to run 
 In the project directory, run:
