@@ -1,9 +1,6 @@
-
-// App.js
-
 import React, { useState, useEffect } from 'react';
+import Select from 'react-select'
 import axios from 'axios';
-import './App.css';
 import TimeRightNow from './TimeRightNow.js';
 
 function App() {
@@ -11,8 +8,24 @@ function App() {
   const [province, setProvince] = useState('');
   const [city, setCity] = useState('');
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [optionsProvince, setoptionsProvince] = useState([]);
 
   const url = `https://cuaca-gempa-rest-api.vercel.app/weather/${province}/${city}`;
+  
+  useEffect(() => {
+    fetchProvinces();
+    }
+  )
+
+  const fetchProvinces = () => {
+    axios.get('/data/provinces.json')
+      .then(response => {
+        setoptionsProvince(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching provinces:', error);
+      });
+  };
 
   const searchProvince = (event) => {
     if (event.key === 'Enter') {
@@ -71,13 +84,11 @@ function App() {
         <TimeRightNow />
       </div>
       <div className="search-container">
-        <input
-          value={province}
-          onChange={(event) => setProvince(event.target.value)}
-          onKeyPress={searchProvince}
-          placeholder="Enter province"
-          type="text"
-        />
+       <Select
+          options={optionsProvince}
+          onChange={(selectedOption) => setProvince(selectedOption.value)}
+          placeholder="Select province"
+        /> 
         <input
           value={city}
           onChange={(event) => setCity(event.target.value)}
