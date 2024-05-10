@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 function TimeRightNow() {
   const [currentTime, setCurrentTime] = useState(new Date());
+  const test;
 
   useEffect(() => {
     const timerID = setInterval(() => tick(), 1000);
