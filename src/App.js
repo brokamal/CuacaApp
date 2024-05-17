@@ -77,10 +77,29 @@ function App() {
   const temperatureData = data.data ? data.data.params[5].times[currentHour].celcius : null;
   const weatherData = data.data ? data.data.params[6].times[currentHour].name : null;
 
+
+  const weatherClassMap = {
+    'Cerah': 'Cerah', 
+    'Cerah Berawan': 'Cerah-Berawan',
+    'Berawan': 'Berawan',
+    'Berawan Tebal': 'Berawan-Tebal',
+    'Udara Kabur': 'Udara-Kabur',
+    'Asap': 'Asap',
+    'Kabut': 'Kabut',
+    'Hujan Ringan': 'Hujan-Ringan',
+    'Hujan Sedang': 'Hujan-Sedang',
+    'Hujan Lebat': 'Hujan-Lebat',
+    'Hujan Lokal': 'Hujan-Lokal',
+    'Hujan Petir': 'Hujan-Petir'
+  };
+
+  const weatherClass = weatherData ? weatherClassMap[weatherData] : 
+'';
+
   return (
     <div className="app">
       <div className="header">
-        <h1>Weather Forecast</h1>
+        <h1>Cuaca App</h1>
         <TimeRightNow />
       </div>
       <div className="search-container">
@@ -99,7 +118,7 @@ function App() {
       </div>
       <div className="weather-container">
         {data.data &&
-          <div className="weather-card">
+          <div className={`weather-card ${weatherClass}`}>
             <p>Province: {data.data.domain}</p>
             <p>City: {data.data.description}</p>
             <p className="temp">{temperatureData}</p>
