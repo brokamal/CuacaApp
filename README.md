@@ -9,7 +9,7 @@ Boostraped with `create react app`.
 
 To add:
 - Selection scroll for provinces and cities search.
- - Add cities 
+  - Add cities 
 - Logo and theme functionalities based on weather.
   - Add more css theme according to the weather 
 
