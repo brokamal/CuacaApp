@@ -65,8 +65,14 @@ body {
   background-color: cyan;
   color: white;
 }
-
-
+.weather-card.Berawan{
+  background-color: gray;
+  color: white;
+}
+.weather-card.Berawan-Tebal{
+  background-color: gray;
+  color: white;
+}
 .temp {
   font-weight: bold;
   font-size: 24px;
