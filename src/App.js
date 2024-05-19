@@ -9,6 +9,7 @@ function App() {
   const [city, setCity] = useState('');
   const [currentTime, setCurrentTime] = useState(new Date());
   const [optionsProvince, setoptionsProvince] = useState([]);
+  const [optionsCity, setoptionsCity] = useState([]); 
 
   const url = `https://cuaca-gempa-rest-api.vercel.app/weather/${province}/${city}`;
   
@@ -27,11 +28,22 @@ function App() {
       });
   };
 
-  const searchProvince = (event) => {
-    if (event.key === 'Enter') {
-      fetchData();
-      setProvince('');
-    }
+
+  useEffect(() => {
+    if (province) {
+      fetchCities(province);
+      }
+    }, [province]);
+
+  const fetchCities = () => {
+    axios.get('/data/cities.json')
+      .then(response => {
+        const filteredCities = response.data.filter(city => city.province === province);
+        setoptionsCity(filteredCities);
+      })
+      .catch(error => {
+        console.error('Error fetching city:', error);
+      });
   };
 
   const searchCity = (event) => {
@@ -108,13 +120,19 @@ function App() {
           onChange={(selectedOption) => setProvince(selectedOption.value)}
           placeholder="Select province"
         /> 
-        <input
+        <Select 
+          options={optionsCity}
+          onChange={(selectedOption) => setCity(selectedOption.value)} 
+          placeholder="Select city"
+          />
+        <button onClick={fetchData}>Search </button>
+     /*   <input
           value={city}
           onChange={(event) => setCity(event.target.value)}
           onKeyPress={searchCity}
           placeholder="Enter city"
           type="text"
-        />
+        /> */
       </div>
       <div className="weather-container">
         {data.data &&
