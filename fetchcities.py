@@ -1,6 +1,4 @@
 # Python script for fetching all cities from each provinces
-
-
 import requests
 import json
 provinces = [
