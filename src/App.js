@@ -52,7 +52,7 @@ function App() {
         fetchData();
         setCity('');
       } else {
-        console.log('Enter Province beforehand!');
+        console.log("Enter province first") 
       }
     }
   };
@@ -125,14 +125,13 @@ function App() {
           onChange={(selectedOption) => setCity(selectedOption.value)} 
           placeholder="Select city"
           />
-        <button onClick={fetchData}>Search </button>
-     /*   <input
+      <input
           value={city}
           onChange={(event) => setCity(event.target.value)}
           onKeyPress={searchCity}
           placeholder="Enter city"
           type="text"
-        /> */
+        /> 
       </div>
       <div className="weather-container">
         {data.data &&
