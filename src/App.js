@@ -35,18 +35,7 @@ function App() {
       }
     }, [province]);
 
-  const fetchCities = () => {
-    axios.get('/data/cities.json')
-      .then(response => {
-        const filteredCities = response.data.filter(city => city.province === province);
-        setoptionsCity(filteredCities);
-      })
-      .catch(error => {
-        console.error('Error fetching city:', error);
-      });
-  };
-
-  const searchCity = (event) => {
+    const searchCity = (event) => {
     if (event.key === 'Enter') {
       if (province !== '') {
         fetchData();
@@ -120,12 +109,7 @@ function App() {
           onChange={(selectedOption) => setProvince(selectedOption.value)}
           placeholder="Select province"
         /> 
-        <Select 
-          options={optionsCity}
-          onChange={(selectedOption) => setCity(selectedOption.value)} 
-          placeholder="Select city"
-          />
-      <input
+     <input
           value={city}
           onChange={(event) => setCity(event.target.value)}
           onKeyPress={searchCity}
