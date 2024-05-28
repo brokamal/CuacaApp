@@ -7,9 +7,7 @@ Boostraped with `create react app`.
 
 ## Work in progress.
 
-To add:
-- Logo and theme functionalities based on weather.
-  - Add more css theme according to the weather 
+
 
 # How to run 
 In the project directory, run:
