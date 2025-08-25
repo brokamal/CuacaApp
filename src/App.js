@@ -28,6 +28,16 @@ function App() {
       });
   };
 
+  const fetchCities = () => {
+    axios.get('data/provinces/cities.json')
+    .then(response => {
+        setoptionsCity(response.data);
+      })
+    .catch(error => {
+        console.error('Error fetching cities: ', error);
+      })
+  }
+
 
   useEffect(() => {
     if (province) {
